@@ -14,7 +14,8 @@ def main():
   BubbleSort(arr)
   end = time.process_time()
   print(arr)
-  print('排序花费时间为：',end - start)
+  k = int(N/2)
+  print('当N=%d时排序花费时间为：%s,k=%s' % (N,end - start,arr[k]))
 
 def BubbleSort(arr):
   i = 0
