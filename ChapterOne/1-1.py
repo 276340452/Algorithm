@@ -15,11 +15,36 @@ def main():
   # BubbleSort(arr)
   # SelectionSort(arr)
   # InsertionSort(arr)
-  ShellSort(arr)
+  # ShellSort(arr)
+  arr = MergeSort(arr)
   end = time.process_time()
   print(arr)
   k = int(N/2)
   print('当N=%d时排序花费时间为：%s,k=%s' % (N,end - start,arr[k]))
+
+def MergeSort(arr):
+  if len(arr)<2:
+    return arr
+  # 切换分为两个数组
+  middle = math.floor(len(arr)/2)
+  left = arr[0:middle]
+  right = arr[middle:len(arr)]
+  # 递归调用归并算法
+  return merge(MergeSort(left),MergeSort(right))
+def merge(left,right):
+  result = []
+  while len(left)>0 and len(right)>0:
+    # 比较大小，依次放入数组
+    if left[0] < right[0]:
+      result.append(left.pop(0))
+    else:
+      result.append(right.pop(0))
+  # 将剩余数组放入数组
+  while len(left):
+    result.append(left.pop(0))
+  while len(right):
+    result.append(right.pop(0))
+  return result
 
 def ShellSort(arr):
   gap = 1
