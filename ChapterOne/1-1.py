@@ -23,11 +23,13 @@ def main():
 
 def ShellSort(arr):
   gap = 1
+  # 动态设置增量
   while gap < len(arr):
     gap = gap * 3 + 1
   
   while gap > 0:
     i = gap
+    # 插入排序
     while i < len(arr):
       current = arr[i]
       prePos = i - gap
@@ -36,16 +38,21 @@ def ShellSort(arr):
         prePos = prePos - gap
       arr[prePos + gap] = current
       i = i + 1
+    # 动态设置增量
     gap = math.floor(gap/3)
 
 def InsertionSort(arr):
   i = 0
   while i < len(arr):
+    # 记录当前值
     current = arr[i]
+    # 前一个值的位置
     prePos = i - 1
+    # 依次与前一个值对比，直到比当前值小的位置
     while prePos >= 0 and arr[prePos] > current:
       arr[prePos + 1] = arr[prePos]
       prePos = prePos - 1
+    # 插入
     arr[prePos + 1] = current
     i = i + 1
 
@@ -53,16 +60,20 @@ def SelectionSort(arr):
   i = 0
   left = 0
   right = len(arr)-1
+  # 确定未排序的数据段
   while left < right:
     minPos = left
     maxPos = right
     i = left
     while i <= right:
+      # 记录最小值的位置
       if arr[i] > arr[maxPos]:
         maxPos = i
+      # 记录最大值的位置
       if arr[i] < arr[minPos]:
         minPos = i
       i = i + 1
+    # 交换
     temp = arr[left]
     arr[left] = arr[minPos]
     arr[minPos] = temp
