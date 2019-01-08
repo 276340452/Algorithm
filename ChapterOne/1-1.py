@@ -3,8 +3,15 @@
 import random
 import time
 import math
+import sys
+
+def swap(arr, i, j):
+  temp = arr[i]
+  arr[i] = arr[j]
+  arr[j] = temp
 
 def main():
+  # sys.setrecursionlimit(1000000)  # 设置最大递归深度
   N = eval(input('请输入N（N为正整数）：'))
   arr = []
   i = 0
@@ -16,12 +23,32 @@ def main():
   # SelectionSort(arr)
   # InsertionSort(arr)
   # ShellSort(arr)
-  arr = MergeSort(arr)
+  # arr = MergeSort(arr)
+  QuickSort(arr,0,len(arr)-1)
   end = time.process_time()
   print(arr)
   k = int(N/2)
   print('当N=%d时排序花费时间为：%s,k=%s' % (N,end - start,arr[k]))
 
+# 快速排序
+def QuickSort(arr,left,right):
+  if left < right:
+    partitionIndex = partition(arr,left,right)
+    QuickSort(arr,left,partitionIndex-1)
+    QuickSort(arr,partitionIndex+1,right)
+def partition(arr,left,right):
+  pivot = left
+  index = pivot + 1
+  i = index
+  while i <= right:
+    if arr[i] < arr[pivot]:
+      swap(arr,i,index)
+      index = index + 1
+    i = i + 1
+  swap(arr,pivot,index-1)
+  return index-1
+
+# 归并排序
 def MergeSort(arr):
   if len(arr)<2:
     return arr
@@ -46,6 +73,7 @@ def merge(left,right):
     result.append(right.pop(0))
   return result
 
+# 希尔排序（缩小增量排序）
 def ShellSort(arr):
   gap = 1
   # 动态设置增量
@@ -66,6 +94,7 @@ def ShellSort(arr):
     # 动态设置增量
     gap = math.floor(gap/3)
 
+# 插入排序
 def InsertionSort(arr):
   i = 0
   while i < len(arr):
@@ -81,6 +110,7 @@ def InsertionSort(arr):
     arr[prePos + 1] = current
     i = i + 1
 
+# 选择排序
 def SelectionSort(arr):
   i = 0
   left = 0
@@ -99,15 +129,18 @@ def SelectionSort(arr):
         minPos = i
       i = i + 1
     # 交换
-    temp = arr[left]
-    arr[left] = arr[minPos]
-    arr[minPos] = temp
-    temp = arr[right]
-    arr[right] = arr[maxPos]
-    arr[maxPos] = temp
+    swap(arr,left,minPos)
+    # temp = arr[left]
+    # arr[left] = arr[minPos]
+    # arr[minPos] = temp
+    swap(arr,right,maxPos)
+    # temp = arr[right]
+    # arr[right] = arr[maxPos]
+    # arr[maxPos] = temp
     left = left + 1
     right = right - 1
 
+# 冒泡排序
 def BubbleSort(arr):
   i = 0
   posMax = 0 # 最后一次交换位置
@@ -136,9 +169,10 @@ def BubbleSort(arr):
     while j > n:
       # 交换
       if arr[j] < arr[j-1]:
-        temp = arr[j]
-        arr[j] = arr[j-1]
-        arr[j-1] = temp
+        swap(arr,j,j-1)
+        # temp = arr[j]
+        # arr[j] = arr[j-1]
+        # arr[j-1] = temp
         flag = 1
         posMin = j # 记录最后一次交换的位置
       j = j - 1
@@ -146,4 +180,5 @@ def BubbleSort(arr):
       return
     n = posMin
     i = i + 1
+
 main()
